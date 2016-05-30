@@ -1,0 +1,57 @@
+package com.es;
+
+import java.util.Properties;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver;
+import org.thymeleaf.templateresolver.TemplateResolver;
+
+import nz.net.ultraq.thymeleaf.LayoutDialect;
+
+@Configuration
+public class AppConfig  extends WebMvcConfigurerAdapter{
+
+	
+	
+	@Override
+	public void addViewControllers(ViewControllerRegistry registry) {
+		registry.addViewController("/").setViewName("index");
+	}
+	
+	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		registry.addResourceHandler("/app/**").addResourceLocations(
+				"classpath:/static/app/");
+		registry.addResourceHandler("/js/**").addResourceLocations(
+				"classpath:/static/js/");
+
+	}
+	
+	@Bean
+	// @Description("Thymeleaf template engine with Spring integration")
+	public TemplateEngine templateEngine() {
+		// SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+		// templateEngine.setTemplateResolver();
+		TemplateEngine templateEngine = new TemplateEngine();
+		templateEngine.addDialect(new LayoutDialect());
+		templateEngine.setTemplateResolver(new TemplateResolver());
+		return templateEngine;
+	}
+	
+	@Bean
+	public TemplateResolver springThymeleafTemplateResolver() {  
+	    SpringResourceTemplateResolver resolver = new SpringResourceTemplateResolver();
+	    resolver.setPrefix("classpath:/templates/");
+	    resolver.setSuffix(".html");
+	    resolver.setOrder(1);
+	    resolver.setTemplateMode("HTML5");
+	    return resolver;
+	}
+
+}

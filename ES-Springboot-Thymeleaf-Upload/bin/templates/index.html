@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<title>Insert title here</title>
+</head>
+<body>
+<div th:if="${pesan != null}">
+								<div class="alert alert-success">
+									<p th:text="${pesan}"></p>
+								</div>
+							</div>
+<form id="form" action="#" th:object="${entity}"
+								enctype="multipart/form-data"
+								th:action="@{/save}" method="post"
+								class="form-horizontal">
+								
+							
+								
+
+								<div class="form-group">
+									<label for="pk" class="col-sm-2 control-label">Pilih
+										Gambar</label>
+									<div class="col-sm-5">
+										<input type="file" name="file" accept="image/*"
+											class="form-control" />
+									</div>
+								</div>
+
+								<button type="submit" class="btn btn-success">
+									<span class="glyphicon glyphicon-floppy-disk"></span> Simpan
+								</button>
+							
+							</form>
+</body>
+</html>
